@@ -4,10 +4,13 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "tbl_book")
-data class BookEntity(
+class BookEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val bookId: Long,
-    val name: String,
-    val author: String
+    var bookId: Long? = null,
+    var name: String? = null,
+    var author: String? = null,
+    @ManyToOne
+    @JoinColumn(name = "bookstoreId")
+    var bookstore: BookstoreEntity? = null
 )
