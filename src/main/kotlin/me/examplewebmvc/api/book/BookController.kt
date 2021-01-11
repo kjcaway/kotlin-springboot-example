@@ -3,9 +3,12 @@ package me.examplewebmvc.api.book
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
-import me.examplewebmvc.api.book.model.BookEntity
+import me.examplewebmvc.api.book.entity.BookEntity
 import me.examplewebmvc.api.book.repository.BookRepository
+import me.examplewebmvc.api.book.service.BookService
+import me.examplewebmvc.api.book.type.Book
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -13,24 +16,25 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/book")
 class BookController(
-    val bookRepository: BookRepository
+    val bookService: BookService
 ) {
     @ApiOperation(value = "select books", notes = "select books")
     @GetMapping
     fun getBooks(
         @ApiParam(value = "book store id", example = "1")
         @RequestParam(required = false)
-        bookStoreId: Long
+        bookStoreId: Long?
     ): ResponseEntity<Any>{
         return try {
-            val books = bookRepository.findAll()
+            val books = bookService.getBooks(bookStoreId)
 
             ResponseEntity.ok().body(hashMapOf(
                 "data" to books,
                 "count" to books.size
             ))
         } catch (e: Exception){
-            ResponseEntity.badRequest().build()
+
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
         }
     }
 
@@ -39,43 +43,30 @@ class BookController(
     fun setBook(
         @ApiParam(value = "{\"author\": \"\", \"name\": \"\"}")
         @RequestBody
-        map: Map<String, Any>
+        book: Book
     ): ResponseEntity<Any>{
         return try {
-            val bookEntity = BookEntity()
-            bookEntity.author = map["author"] as String
-            bookEntity.name = map["name"] as String
-
-            bookRepository.save(bookEntity)
+            bookService.setBook(book)
 
             ResponseEntity.ok().build()
         } catch (e: Exception){
-            ResponseEntity.badRequest().build()
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
         }
     }
 
     @ApiOperation(value = "modify book", notes = "modify book")
-    @PutMapping("/{id}")
+    @PutMapping
     fun modBook(
-        @PathVariable("id")
-        bookId: Long,
-        @ApiParam(value = "{\"bookId\": 1, \"author\": \"\", \"name\": \"\"}")
+        @ApiParam(value = "{\"bookId\": 1, \"authorK\": \"\", \"name\": \"\"}")
         @RequestBody
-        map: Map<String, Any>
+        book: Book
     ): ResponseEntity<Any>{
         return try {
-            var bookEntity = bookRepository.findByIdOrNull(bookId)
-
-            if(bookEntity != null){
-                map["author"]?.let { bookEntity.author = it as String}
-                map["name"]?.let { bookEntity.name = it as String}
-                bookRepository.save(bookEntity)
-            }
+            bookService.modBook(book)
 
             ResponseEntity.ok().build()
-
         } catch (e: Exception){
-            ResponseEntity.badRequest().build()
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
         }
     }
 
@@ -86,16 +77,11 @@ class BookController(
         bookId: Long
     ): ResponseEntity<Any>{
         return try {
-            var bookEntity = bookRepository.findByIdOrNull(bookId)
-
-            if(bookEntity != null){
-                bookRepository.delete(bookEntity)
-            }
+            bookService.delBook(bookId)
 
             ResponseEntity.ok().build()
-
         } catch (e: Exception){
-            ResponseEntity.badRequest().build()
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
         }
     }
 }
