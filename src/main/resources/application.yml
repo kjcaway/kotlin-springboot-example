@@ -17,3 +17,7 @@ spring:
       format_sql: true
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+
+api:
+  base:
+    path: /api

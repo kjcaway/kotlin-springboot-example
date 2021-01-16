@@ -3,15 +3,12 @@ package me.examplewebmvc.api.book
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
-import me.examplewebmvc.api.book.entity.BookEntity
-import me.examplewebmvc.api.book.repository.BookRepository
 import me.examplewebmvc.api.book.service.BookService
 import me.examplewebmvc.api.book.type.Book
 import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @Api(value = "BookController")
 @RestController
-@RequestMapping("/book")
+@RequestMapping("\${api.base.path}/book")
 class BookController(
     val bookService: BookService
 ) {
