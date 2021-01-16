@@ -3,6 +3,7 @@ package me.examplewebmvc.api.book.service
 import me.examplewebmvc.api.book.entity.BookEntity
 import me.examplewebmvc.api.book.repository.BookRepository
 import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.exception.EmptyBookException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -22,7 +23,7 @@ class BookServiceImpl(
     override fun getBook(bookId: Long): BookEntity? {
         var bookOptional  = bookRepository.findById(bookId)
         if(bookOptional.isEmpty){
-            throw IllegalStateException("there's empty matched book.")
+            throw EmptyBookException("there's empty matched book.")
         }
         return bookOptional.get()
     }
@@ -36,6 +37,10 @@ class BookServiceImpl(
 
     override fun modBook(inputBook: Book) {
         var bookOptional = bookRepository.findById(inputBook.bookId!!)
+        if(bookOptional.isEmpty){
+            throw EmptyBookException("there's empty matched book.")
+        }
+
         bookOptional.ifPresent { bookEntity ->
             inputBook.author?.let { bookEntity.author = it}
             inputBook.name?.let { bookEntity.name = it}
@@ -43,10 +48,10 @@ class BookServiceImpl(
         }
     }
 
-    override fun delBook(bookId: Long) {
+    override fun delBook(bookId: Long){
         var exist = bookRepository.existsById(bookId)
         if(!exist){
-            throw IllegalStateException("there's empty matched book.")
+            throw EmptyBookException("there's empty matched book.")
         }
 
         bookRepository.deleteById(bookId)

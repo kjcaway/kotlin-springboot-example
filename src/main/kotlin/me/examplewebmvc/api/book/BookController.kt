@@ -7,10 +7,12 @@ import me.examplewebmvc.api.book.entity.BookEntity
 import me.examplewebmvc.api.book.repository.BookRepository
 import me.examplewebmvc.api.book.service.BookService
 import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.exception.EmptyBookException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @Api(value = "BookController")
 @RestController
@@ -27,14 +29,12 @@ class BookController(
     ): ResponseEntity<Any>{
         return try {
             val books = bookService.getBooks(bookStoreId)
-
             ResponseEntity.ok().body(hashMapOf(
                 "data" to books,
                 "count" to books.size
             ))
         } catch (e: Exception){
-
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }
 
@@ -50,7 +50,7 @@ class BookController(
 
             ResponseEntity.ok().build()
         } catch (e: Exception){
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }
 
@@ -65,8 +65,10 @@ class BookController(
             bookService.modBook(book)
 
             ResponseEntity.ok().build()
+        } catch (e: EmptyBookException){
+            throw EmptyBookException("there's no matched book")
         } catch (e: Exception){
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }
 
@@ -80,8 +82,10 @@ class BookController(
             bookService.delBook(bookId)
 
             ResponseEntity.ok().build()
+        } catch (e: EmptyBookException){
+            throw EmptyBookException("there's no matched book")
         } catch (e: Exception){
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }
 }

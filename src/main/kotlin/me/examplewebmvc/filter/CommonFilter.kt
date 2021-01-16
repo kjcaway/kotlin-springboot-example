@@ -14,7 +14,11 @@ class CommonFilter: GenericFilterBean() {
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         val httpServletRequest = request as HttpServletRequest
         logger.info("Reqeust method : ${httpServletRequest.method}, url : ${httpServletRequest.requestURL}")
-        chain?.doFilter(request, response)
-        logger.info("Response content-type : ${response?.contentType}")
+        try {
+            chain?.doFilter(request, response)
+            logger.info("Response content-type : ${response?.contentType}")
+        } catch (e: Exception){
+            logger.error(e.printStackTrace())
+        }
     }
 }
