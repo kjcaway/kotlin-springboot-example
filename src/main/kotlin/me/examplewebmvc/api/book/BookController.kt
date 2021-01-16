@@ -7,7 +7,10 @@ import me.examplewebmvc.api.book.entity.BookEntity
 import me.examplewebmvc.api.book.repository.BookRepository
 import me.examplewebmvc.api.book.service.BookService
 import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,6 +23,8 @@ import org.springframework.web.server.ResponseStatusException
 class BookController(
     val bookService: BookService
 ) {
+    val logger: Log = LogFactory.getLog(BookController::class.java)
+
     @ApiOperation(value = "select books", notes = "select books")
     @GetMapping
     fun getBooks(
@@ -34,6 +39,7 @@ class BookController(
                 "count" to books.size
             ))
         } catch (e: Exception){
+            logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }
@@ -49,7 +55,11 @@ class BookController(
             bookService.setBook(book)
 
             ResponseEntity.ok().build()
+        } catch (e: AuthorException){
+            logger.error(e.localizedMessage, e)
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "${e.author} is too short.")
         } catch (e: Exception){
+            logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }
@@ -66,8 +76,15 @@ class BookController(
 
             ResponseEntity.ok().build()
         } catch (e: EmptyBookException){
-            throw EmptyBookException("there's no matched book")
+            // Use ControlAdvice and Exception Handler
+            logger.error(e.localizedMessage, e)
+            throw e
+        } catch (e: AuthorException){
+            // Use ResponseStatusException (new in spring 5)
+            logger.error(e.localizedMessage, e)
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "${e.author} is too short.")
         } catch (e: Exception){
+            logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }
@@ -83,8 +100,10 @@ class BookController(
 
             ResponseEntity.ok().build()
         } catch (e: EmptyBookException){
-            throw EmptyBookException("there's no matched book")
+            logger.error(e.localizedMessage, e)
+            throw e
         } catch (e: Exception){
+            logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
         }
     }

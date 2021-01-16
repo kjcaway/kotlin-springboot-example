@@ -3,6 +3,7 @@ package me.examplewebmvc.api.book.service
 import me.examplewebmvc.api.book.entity.BookEntity
 import me.examplewebmvc.api.book.repository.BookRepository
 import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -30,6 +31,11 @@ class BookServiceImpl(
 
     override fun setBook(inputBook: Book) {
         var bookEntity = BookEntity()
+
+        if(inputBook.author!!.length < 5){
+            throw AuthorException(inputBook.author!!)
+        }
+
         bookEntity.setBookInfo(inputBook)
 
         bookRepository.save(bookEntity)
@@ -42,8 +48,14 @@ class BookServiceImpl(
         }
 
         bookOptional.ifPresent { bookEntity ->
-            inputBook.author?.let { bookEntity.author = it}
+            inputBook.author?.let {
+                if(it.length < 5){
+                    throw AuthorException(it)
+                }
+                bookEntity.author = it
+            }
             inputBook.name?.let { bookEntity.name = it}
+
             bookRepository.save(bookEntity)
         }
     }

@@ -1,5 +1,7 @@
 server:
   port: 8080
+  error:
+    include-message: always     # show reason in error response body
 
 spring:
   datasource:
