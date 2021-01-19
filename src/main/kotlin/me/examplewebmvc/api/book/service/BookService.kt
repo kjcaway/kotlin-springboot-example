@@ -1,12 +1,12 @@
 package me.examplewebmvc.api.book.service
 
-import me.examplewebmvc.api.book.entity.BookEntity
-import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.api.book.type.request.BookRequest
+import me.examplewebmvc.api.book.type.response.BookResponse
 
 interface BookService {
-    fun getBooks(bookstoreId: Long?): List<BookEntity>
-    fun getBook(bookId: Long): BookEntity?
-    fun setBook(inputBook: Book)
-    fun modBook(inputBook: Book)
+    fun getBooks(bookstoreId: Long?): List<BookResponse>
+    fun getBook(bookId: Long): BookResponse
+    fun setBook(inputBook: BookRequest)
+    fun modBook(inputBook: BookRequest)
     fun delBook(bookId: Long)
 }

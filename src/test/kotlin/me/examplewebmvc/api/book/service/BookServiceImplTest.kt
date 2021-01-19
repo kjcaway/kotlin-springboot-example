@@ -1,11 +1,10 @@
 package me.examplewebmvc.api.book.service
 
 import me.examplewebmvc.api.book.repository.BookRepository
-import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.api.book.type.request.Book
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.platform.commons.logging.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 

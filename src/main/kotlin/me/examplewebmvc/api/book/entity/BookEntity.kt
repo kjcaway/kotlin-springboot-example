@@ -1,6 +1,6 @@
 package me.examplewebmvc.api.book.entity
 
-import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.api.book.type.request.BookRequest
 import java.io.Serializable
 import javax.persistence.*
 
@@ -17,9 +17,9 @@ data class BookEntity(
     var bookstore: BookstoreEntity = BookstoreEntity()
 ): Serializable {
 
-    fun setBookInfo(book: Book){
-        this.name = book.name
-        this.author = book.author
-        this.bookstore.bookstoreId = book.bookstoreId
+    fun setBookInfo(input: BookRequest){
+        this.name = input.name
+        this.author = input.author
+        this.bookstore.bookstoreId = input.bookstoreId
     }
 }

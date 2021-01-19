@@ -3,8 +3,9 @@ package me.examplewebmvc.api.book
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
+import me.examplewebmvc.basic.response.BasicResponse
 import me.examplewebmvc.api.book.service.BookService
-import me.examplewebmvc.api.book.type.Book
+import me.examplewebmvc.api.book.type.request.BookRequest
 import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
 import org.apache.commons.logging.Log
@@ -31,10 +32,28 @@ class BookController(
     ): ResponseEntity<Any>{
         return try {
             val books = bookService.getBooks(bookStoreId)
-            ResponseEntity.ok().body(hashMapOf(
-                "data" to books,
-                "count" to books.size
-            ))
+
+            ResponseEntity(BasicResponse("SUCCESS", books), HttpStatus.OK)
+        } catch (e: Exception){
+            logger.error(e.localizedMessage, e)
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
+        }
+    }
+
+    @ApiOperation(value = "select book", notes = "select book")
+    @GetMapping("/{id}")
+    fun getBook(
+        @ApiParam(value = "book id", example = "1")
+        @PathVariable
+        id: Long
+    ): ResponseEntity<Any>{
+        return try {
+            val book = bookService.getBook(id)
+
+            ResponseEntity(BasicResponse("SUCCESS", book), HttpStatus.OK)
+        } catch (e: EmptyBookException){
+            logger.error(e.localizedMessage, e)
+            throw e
         } catch (e: Exception){
             logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
@@ -46,12 +65,12 @@ class BookController(
     fun setBook(
         @ApiParam(value = "{\"author\": \"\", \"name\": \"\"}")
         @RequestBody
-        book: Book
+        book: BookRequest
     ): ResponseEntity<Any>{
         return try {
-            bookService.setBook(book)
+            val book = bookService.setBook(book)
 
-            ResponseEntity.ok().build()
+            ResponseEntity(BasicResponse("SUCCESS", book), HttpStatus.OK)
         } catch (e: AuthorException){
             logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "${e.author} is too short.")
@@ -66,12 +85,12 @@ class BookController(
     fun modBook(
         @ApiParam(value = "{\"bookId\": 1, \"authorK\": \"\", \"name\": \"\"}")
         @RequestBody
-        book: Book
+        book: BookRequest
     ): ResponseEntity<Any>{
         return try {
             bookService.modBook(book)
 
-            ResponseEntity.ok().build()
+            ResponseEntity(HttpStatus.OK)
         } catch (e: EmptyBookException){
             // Use ControlAdvice and Exception Handler
             logger.error(e.localizedMessage, e)
@@ -95,7 +114,7 @@ class BookController(
         return try {
             bookService.delBook(bookId)
 
-            ResponseEntity.ok().build()
+            ResponseEntity(HttpStatus.OK)
         } catch (e: EmptyBookException){
             logger.error(e.localizedMessage, e)
             throw e
