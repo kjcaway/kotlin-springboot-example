@@ -1,10 +1,9 @@
 package me.examplewebmvc.api.book.service
 
 import me.examplewebmvc.api.book.repository.BookRepository
-import me.examplewebmvc.api.book.type.request.Book
+import me.examplewebmvc.api.book.type.request.BookRequest
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -17,7 +16,7 @@ class BookServiceImplTest {
 
     @Test
     fun setBook(){
-        var inputBook = Book()
+        var inputBook = BookRequest()
         inputBook.name = "HI, Yolo"
         inputBook.author = "Parker Davison"
         inputBook.bookstoreId = 1
