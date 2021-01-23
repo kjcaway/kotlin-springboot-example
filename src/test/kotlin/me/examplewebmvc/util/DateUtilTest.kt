@@ -1,9 +1,8 @@
 package me.examplewebmvc.util
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import java.sql.Timestamp
-import java.util.*
 
 internal class DateUtilTest{
     @Test
