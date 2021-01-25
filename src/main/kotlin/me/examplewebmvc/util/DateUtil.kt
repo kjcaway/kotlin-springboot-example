@@ -42,6 +42,15 @@ open class DateUtil {
         }
 
         /**
+         * Get Now timestamp
+         *
+         * @return timestamp
+         */
+        fun getNow(): Timestamp{
+            return Timestamp(getNowMilliSecond())
+        }
+
+        /**
          * Get Now time(millisecond)
          *
          * @return time Long

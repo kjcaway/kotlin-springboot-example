@@ -6,6 +6,9 @@ plugins {
 	kotlin("jvm") version "1.4.21"
 	kotlin("plugin.spring") version "1.4.21"
 	kotlin("plugin.jpa") version "1.4.21"
+
+	kotlin("plugin.noarg") version "1.4.21"
+	kotlin("plugin.allopen") version "1.4.21"
 }
 
 group = "me.example-webmvc"
@@ -14,6 +17,12 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
+}
+
+allOpen{
+	annotation("javax.persistence.Entity")
+	annotation("javax.persistence.MappedSuperclass")
+	annotation("javax.persistence.Embeddable")
 }
 
 dependencies {

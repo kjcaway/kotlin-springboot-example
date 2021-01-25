@@ -1,25 +1,30 @@
 package me.examplewebmvc.api.book.entity
 
 import me.examplewebmvc.api.book.type.request.BookRequest
+import me.examplewebmvc.basic.entity.BaseEntity
 import java.io.Serializable
 import javax.persistence.*
 
+
 @Entity
 @Table(name = "tbl_book")
-data class BookEntity(
+class BookEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var bookId: Long? = null,
     var name: String? = null,
     var author: String? = null,
-    @ManyToOne
-    @JoinColumn(name = "bookstoreId", insertable = false, updatable = false)
-    var bookstore: BookstoreEntity = BookstoreEntity()
-): Serializable {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookstoreId")
+    var bookstore: BookstoreEntity? = null
+): BaseEntity(), Serializable {
 
-    fun setBookInfo(input: BookRequest){
-        this.name = input.name
-        this.author = input.author
-        this.bookstore.bookstoreId = input.bookstoreId
+    constructor(input: BookRequest): this(){
+        input.name?.let { this.name = it}
+        input.author?.let { this.author = it}
+    }
+
+    fun setStore(bookstore: BookstoreEntity){
+        this.bookstore = bookstore
     }
 }

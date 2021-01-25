@@ -2,17 +2,20 @@ package me.examplewebmvc.api.book.service
 
 import me.examplewebmvc.api.book.entity.BookEntity
 import me.examplewebmvc.api.book.repository.BookRepository
+import me.examplewebmvc.api.book.repository.BookstoreRepository
 import me.examplewebmvc.api.book.type.request.BookRequest
 import me.examplewebmvc.api.book.type.response.BookResponse
 import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service("bookService")
 @Transactional
 class BookServiceImpl(
-    val bookRepository: BookRepository
+    val bookRepository: BookRepository,
+    var bookstoreRepository: BookstoreRepository
 ) : BookService{
     override fun getBooks(bookstoreId: Long?): List<BookResponse> {
         return if (bookstoreId != null) {
@@ -33,13 +36,12 @@ class BookServiceImpl(
     }
 
     override fun setBook(inputBook: BookRequest) {
-        var bookEntity = BookEntity()
-
-        if(inputBook.author!!.length < 5){
+        if(inputBook.author!!.length < 3){
             throw AuthorException(inputBook.author!!)
         }
-
-        bookEntity.setBookInfo(inputBook)
+        var bookstoreEntity = bookstoreRepository.findByIdOrNull(inputBook.bookstoreId!!)
+        var bookEntity = BookEntity(inputBook)
+        bookstoreEntity?.let { bookEntity.setStore(it)}
 
         bookRepository.save(bookEntity)
     }
