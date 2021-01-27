@@ -1,0 +1,16 @@
+# mariadb_server.yml
+version: '3.7'
+services:
+  db:
+    image: mariadb:10.5
+    container_name: mariadb_boot
+    hostname: mariadb_boot
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - /Users/ahnlab/mariadb_server/data:/var/lib/mysql
+      - /Users/ahnlab/mariadb_server/config:/etc/mysql/conf.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Seoul
