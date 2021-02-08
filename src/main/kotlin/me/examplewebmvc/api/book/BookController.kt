@@ -3,6 +3,7 @@ package me.examplewebmvc.api.book
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
+import me.examplewebmvc.annotation.AuthorDefaultSet
 import me.examplewebmvc.basic.response.BasicResponse
 import me.examplewebmvc.api.book.service.BookService
 import me.examplewebmvc.api.book.type.request.BookRequest
@@ -60,6 +61,7 @@ class BookController(
         }
     }
 
+    @AuthorDefaultSet
     @ApiOperation(value = "insert book", notes = "insert book")
     @PostMapping
     fun setBook(
