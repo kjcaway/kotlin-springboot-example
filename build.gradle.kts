@@ -15,6 +15,8 @@ group = "me.example-webmvc"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
+extra["springCloudVersion"] = "2020.0.1"
+
 repositories {
 	mavenCentral()
 }
@@ -41,7 +43,18 @@ dependencies {
 	implementation("io.springfox:springfox-swagger-ui:2.9.2")
 	implementation("io.springfox:springfox-swagger2:2.9.2")
 
+	// Spring Cloud
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+	implementation("org.springframework.cloud:spring-cloud-sleuth-zipkin")
+	implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+	}
 }
 
 tasks.withType<KotlinCompile> {

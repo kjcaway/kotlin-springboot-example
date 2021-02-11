@@ -3,7 +3,20 @@ server:
   error:
     include-message: always     # show reason in error response body
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    instance:
+      hostname: localhost
+
 spring:
+  application:
+    name: DEMO
+  zipkin:
+    base-url: http://127.0.0.1:9411/
   datasource:
     url: jdbc:mariadb://localhost:3306/book
     driver-class-name: org.mariadb.jdbc.Driver
@@ -37,7 +50,7 @@ logging:
       max-history: 30
       total-size-cap: 1GB
   level:
-    root: debug
+    root: info
     org:
       springframework: warn
       apache: warn
