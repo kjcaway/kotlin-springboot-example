@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8089
   error:
     include-message: always     # show reason in error response body
 
@@ -39,8 +39,8 @@ api:
 
 logging:
   pattern:
-    console: "%d [%t][${PID}][%p]%logger : %msg %ex%n"   # t: thread, p: level
-    file: "%d [%t][${PID}][%p]%logger : %msg %ex%n"
+    console: "%d [%t] [${PID}] [%p] %logger : %msg %ex%n"   # t: thread, p: level
+    file: "%d [%t] [${PID}] [%p] %logger : %msg %ex%n"
   file:
     path: "/User/logs/"
     name: "/User/logs/demo.log"
