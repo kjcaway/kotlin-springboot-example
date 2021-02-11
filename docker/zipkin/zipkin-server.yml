@@ -1,0 +1,8 @@
+# zipkin-server.yml
+version: '3.7'
+services:
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin_boot
+    ports:
+      - 9411:9411
