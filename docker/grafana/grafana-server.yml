@@ -1,0 +1,8 @@
+# grafana-server.yml
+version: '3.7'
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_boot
+    ports:
+      - 3000:3000
