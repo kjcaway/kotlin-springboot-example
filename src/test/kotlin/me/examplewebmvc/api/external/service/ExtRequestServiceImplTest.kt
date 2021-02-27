@@ -1,5 +1,6 @@
 package me.examplewebmvc.api.external.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -26,10 +27,6 @@ class ExtRequestServiceImplTest{
 
     @Test
     fun getExtResourceTest(){
-//        `when`(restTemplate.exchange(
-//            "https://httpbin.org/get", HttpMethod.GET, null, typeRef<Any>()
-//        )).thenReturn(ResponseEntity.ok("mock test"))
-
         `when`(restTemplate.exchange(
             Mockito.anyString(),
             Mockito.any(HttpMethod::class.java),
@@ -39,6 +36,8 @@ class ExtRequestServiceImplTest{
 
         val response = extRequestService.getExtResource()
         println(response.toString())
+
         assertNotNull(response)
+        assertEquals(response, mapOf("result" to "SUCCESS", "data" to "mock test"))
     }
 }
