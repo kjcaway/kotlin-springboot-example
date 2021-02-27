@@ -15,7 +15,8 @@ class ExtRequestServiceImpl(
         val response = restTemplate.exchange(
             "https://httpbin.org/get", HttpMethod.GET, null, typeRef<Any>()
         )
-
+        // TODO 비즈니스 로직 수행...
+        
         return mapOf(
             "result" to "SUCCESS",
             "data" to response.body!!

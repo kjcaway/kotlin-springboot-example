@@ -2,6 +2,7 @@ package me.examplewebmvc.api.external.service
 
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,11 +24,17 @@ class ExtRequestServiceImplTest{
     private lateinit var restTemplate: RestTemplate
     private inline fun <reified T: Any> typeRef(): ParameterizedTypeReference<T> = object: ParameterizedTypeReference<T>(){}
 
-
     @Test
     fun getExtResourceTest(){
+//        `when`(restTemplate.exchange(
+//            "https://httpbin.org/get", HttpMethod.GET, null, typeRef<Any>()
+//        )).thenReturn(ResponseEntity.ok("mock test"))
+
         `when`(restTemplate.exchange(
-            "https://httpbin.org/get", HttpMethod.GET, null, typeRef<Any>()
+            Mockito.anyString(),
+            Mockito.any(HttpMethod::class.java),
+            Mockito.eq(null),
+            Mockito.eq(typeRef<Any>())
         )).thenReturn(ResponseEntity.ok("mock test"))
 
         val response = extRequestService.getExtResource()
