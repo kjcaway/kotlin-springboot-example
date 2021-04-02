@@ -1,0 +1,20 @@
+[
+  {
+    "bookId": 1,
+    "bookstoreId": 1,
+    "name": "MMo RPG",
+    "author": "King, james"
+  },
+  {
+    "bookId": 2,
+    "bookstoreId": 1,
+    "name": "MMo RPG2",
+    "author": "King, james"
+  },
+  {
+    "bookId": 3,
+    "bookstoreId": 1,
+    "name": "MMo RPG3",
+    "author": "King, james"
+  }
+]
