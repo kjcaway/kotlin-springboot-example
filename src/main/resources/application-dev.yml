@@ -23,6 +23,9 @@ eureka:
       hostname: localhost
 
 spring:
+  config:
+    activate:
+      on-profile: dev
   application:
     name: DEMO
   zipkin:

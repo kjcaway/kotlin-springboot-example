@@ -17,6 +17,9 @@ eureka:
     enabled: false
 
 spring:
+  config:
+    activate:
+      on-profile: local  # add VM options like "-Dspring.profiles.active=local"
   application:
     name: DEMO
   zipkin:
