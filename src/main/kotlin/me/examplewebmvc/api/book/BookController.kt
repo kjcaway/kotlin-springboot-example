@@ -4,9 +4,9 @@ import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import me.examplewebmvc.annotation.AuthorDefaultSet
-import me.examplewebmvc.basic.response.BasicResponse
+import me.examplewebmvc.basic.dto.BasicResponse
 import me.examplewebmvc.api.book.service.BookService
-import me.examplewebmvc.api.book.type.request.BookRequest
+import me.examplewebmvc.api.book.dto.request.BookRequest
 import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
 import org.apache.commons.logging.Log
@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
+/**
+ * book, book store CRUD example APIs
+ */
 @Api(value = "BookController")
 @RestController
 @RequestMapping("\${api.base.path}/book")

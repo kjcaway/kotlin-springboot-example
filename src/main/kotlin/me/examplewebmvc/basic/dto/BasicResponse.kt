@@ -1,4 +1,4 @@
-package me.examplewebmvc.basic.response
+package me.examplewebmvc.basic.dto
 
 data class BasicResponse(
     var code: String,

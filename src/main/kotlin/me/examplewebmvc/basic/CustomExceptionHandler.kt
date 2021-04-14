@@ -1,6 +1,6 @@
 package me.examplewebmvc.basic
 
-import me.examplewebmvc.basic.response.ErrorsDetails
+import me.examplewebmvc.basic.dto.ErrorsDetails
 import me.examplewebmvc.exception.EmptyBookException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice

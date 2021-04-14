@@ -1,9 +1,9 @@
 package me.examplewebmvc.api.book.service
 
-import me.examplewebmvc.api.book.entity.BookstoreEntity
-import me.examplewebmvc.api.book.repository.BookRepository
-import me.examplewebmvc.api.book.repository.BookstoreRepository
-import me.examplewebmvc.api.book.type.request.BookRequest
+import me.examplewebmvc.api.book.domain.Bookstore
+import me.examplewebmvc.api.book.domain.BookRepository
+import me.examplewebmvc.api.book.domain.BookstoreRepository
+import me.examplewebmvc.api.book.dto.request.BookRequest
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -66,7 +66,7 @@ class BookServiceImplTest {
 
     @Test
     fun setBookstore(){
-        var bookstoreEntity = BookstoreEntity("알라딘책방")
+        var bookstoreEntity = Bookstore("알라딘책방")
         bookstoreRepository.save(bookstoreEntity)
 
     }

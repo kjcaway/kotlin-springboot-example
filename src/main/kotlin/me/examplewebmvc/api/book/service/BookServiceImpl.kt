@@ -1,10 +1,10 @@
 package me.examplewebmvc.api.book.service
 
-import me.examplewebmvc.api.book.entity.BookEntity
-import me.examplewebmvc.api.book.repository.BookRepository
-import me.examplewebmvc.api.book.repository.BookstoreRepository
-import me.examplewebmvc.api.book.type.request.BookRequest
-import me.examplewebmvc.api.book.type.response.BookResponse
+import me.examplewebmvc.api.book.domain.Book
+import me.examplewebmvc.api.book.domain.BookRepository
+import me.examplewebmvc.api.book.domain.BookstoreRepository
+import me.examplewebmvc.api.book.dto.request.BookRequest
+import me.examplewebmvc.api.book.dto.response.BookResponse
 import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
 import org.springframework.data.repository.findByIdOrNull
@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service("bookService")
 @Transactional
 class BookServiceImpl(
-    val bookRepository: BookRepository,
-    var bookstoreRepository: BookstoreRepository
+        val bookRepository: BookRepository,
+        var bookstoreRepository: BookstoreRepository
 ) : BookService{
     override fun getBooks(bookstoreId: Long?): List<BookResponse> {
         return if (bookstoreId != null) {
@@ -40,7 +40,7 @@ class BookServiceImpl(
             throw AuthorException(inputBook.author!!)
         }
         var bookstoreEntity = bookstoreRepository.findByIdOrNull(inputBook.bookstoreId!!)
-        var bookEntity = BookEntity(inputBook)
+        var bookEntity = Book(inputBook)
         bookstoreEntity?.let { bookEntity.setStore(it)}
 
         bookRepository.save(bookEntity)

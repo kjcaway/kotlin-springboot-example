@@ -1,7 +1,7 @@
 package me.examplewebmvc.api.book.service
 
-import me.examplewebmvc.api.book.type.request.BookRequest
-import me.examplewebmvc.api.book.type.response.BookResponse
+import me.examplewebmvc.api.book.dto.request.BookRequest
+import me.examplewebmvc.api.book.dto.response.BookResponse
 
 interface BookService {
     fun getBooks(bookstoreId: Long?): List<BookResponse>

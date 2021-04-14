@@ -1,4 +1,4 @@
-package me.examplewebmvc.basic.entity
+package me.examplewebmvc.basic.domain
 
 import me.examplewebmvc.util.DateUtil
 import java.sql.Timestamp
@@ -8,7 +8,7 @@ import javax.persistence.PrePersist
 import javax.persistence.PreUpdate
 
 @MappedSuperclass
-abstract class BaseEntity {
+abstract class Base {
     @Column(updatable = false)
     lateinit var createdTime: Timestamp
     lateinit var modifyTime: Timestamp

@@ -2,7 +2,7 @@ package me.examplewebmvc
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import me.examplewebmvc.api.book.service.BookService
-import me.examplewebmvc.api.book.type.request.BookRequest
+import me.examplewebmvc.api.book.dto.request.BookRequest
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

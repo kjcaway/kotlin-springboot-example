@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import me.examplewebmvc.api.book.BookController
 import me.examplewebmvc.api.external.service.ExtTestService
-import me.examplewebmvc.basic.response.BasicResponse
+import me.examplewebmvc.basic.dto.BasicResponse
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.http.HttpStatus
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 /**
- * CompletableFuture 테스트
+ * CompletableFuture example test APIs
  */
 @Api(value = "ExternalController")
 @RestController

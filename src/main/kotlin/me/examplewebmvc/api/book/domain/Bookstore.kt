@@ -1,17 +1,17 @@
-package me.examplewebmvc.api.book.entity
+package me.examplewebmvc.api.book.domain
 
-import me.examplewebmvc.basic.entity.BaseEntity
+import me.examplewebmvc.basic.domain.Base
 import java.io.Serializable
 import javax.persistence.*
 
 @Entity
 @Table(name = "tbl_bookstore")
-class BookstoreEntity (
+class Bookstore (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var bookstoreId: Long? = null,
     var name: String? = null
-): BaseEntity(), Serializable {
+): Base(), Serializable {
     constructor(name: String): this(){
         this.name = name
     }

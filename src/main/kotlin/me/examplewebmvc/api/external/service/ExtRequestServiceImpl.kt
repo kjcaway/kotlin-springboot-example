@@ -5,6 +5,9 @@ import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
+/**
+ * RestTemplate example
+ */
 @Service
 class ExtRequestServiceImpl(
     val restTemplate: RestTemplate

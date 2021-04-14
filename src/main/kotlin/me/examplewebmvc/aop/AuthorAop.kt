@@ -12,6 +12,11 @@ import org.springframework.web.context.request.ServletRequestAttributes
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.declaredMemberProperties
 
+/**
+ * AOP example
+ * Annotation pointcut, Before advice
+ * Reflection
+ */
 @Aspect
 @Component
 class AuthorAop {

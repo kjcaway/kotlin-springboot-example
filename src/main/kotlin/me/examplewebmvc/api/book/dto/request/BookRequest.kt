@@ -1,4 +1,4 @@
-package me.examplewebmvc.api.book.type.request
+package me.examplewebmvc.api.book.dto.request
 
 import java.io.Serializable
 

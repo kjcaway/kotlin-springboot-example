@@ -29,6 +29,11 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: root
+    hikari:
+      connection-timeout: 10000
+      minimum-idel: 5
+      maximum-pool-size: 10
+      pool-name: HikariCP
   jpa:
     open-in-view: false
     generate-ddl: false

@@ -9,6 +9,9 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.stream.Collectors
 
+/**
+ * CompletableFuture example
+ */
 @Service
 class ExtTestServiceImpl(
     val taskExecutor: Executor
