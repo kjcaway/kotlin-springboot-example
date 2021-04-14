@@ -24,6 +24,7 @@ spring:
     name: DEMO
   zipkin:
     enabled: false
+    base-url: http://127.0.0.1:9411/
   datasource:
     url: jdbc:mariadb://localhost:3306/book
     driver-class-name: org.mariadb.jdbc.Driver
