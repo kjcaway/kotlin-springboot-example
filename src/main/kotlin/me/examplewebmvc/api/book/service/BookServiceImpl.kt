@@ -35,7 +35,7 @@ class BookServiceImpl(
         return BookResponse(bookOptional.get())
     }
 
-    override fun setBook(inputBook: BookRequest) {
+    override fun setBook(inputBook: BookRequest): BookResponse {
         if(inputBook.author!!.length < 3){
             throw AuthorException(inputBook.author!!)
         }
@@ -43,7 +43,9 @@ class BookServiceImpl(
         var bookEntity = Book(inputBook)
         bookstoreEntity?.let { bookEntity.setStore(it)}
 
-        bookRepository.save(bookEntity)
+        val book = bookRepository.save(bookEntity)
+
+        return BookResponse(book)
     }
 
     override fun modBook(inputBook: BookRequest) {
@@ -54,14 +56,16 @@ class BookServiceImpl(
 
         bookOptional.ifPresent { bookEntity ->
             inputBook.author?.let {
-                if(it.length < 5){
+                if (it.length < 5) {
                     throw AuthorException(it)
                 }
                 bookEntity.author = it
             }
-            inputBook.name?.let { bookEntity.name = it}
+            inputBook.name?.let { bookEntity.name = it }
 
-            bookRepository.save(bookEntity)
+            val book = bookRepository.save(bookEntity)
+
+            BookResponse(book)
         }
     }
 

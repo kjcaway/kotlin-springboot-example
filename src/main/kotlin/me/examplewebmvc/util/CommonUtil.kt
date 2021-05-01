@@ -3,7 +3,7 @@ package me.examplewebmvc.util
 import java.util.*
 
 open class CommonUtil {
-    companion object{
+    companion object {
         /**
          * Get Random String by Length
          *

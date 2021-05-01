@@ -6,7 +6,7 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
 open class DateUtil {
-    companion object{
+    companion object {
         private val logger: Log = LogFactory.getLog(DateUtil::class.java)
         private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 

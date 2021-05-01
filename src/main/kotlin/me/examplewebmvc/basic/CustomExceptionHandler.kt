@@ -15,9 +15,8 @@ class CustomExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(value = [EmptyBookException::class])
     fun handlerEmptyBook(ex: EmptyBookException, request: WebRequest): ResponseEntity<ErrorsDetails> {
         val errorDetails = ErrorsDetails(
-            Date(),
-            "Custom Empty Exception!!",
-            ex.message!!
+            code = "FAIL",
+            message = ex.message!!
         )
         return ResponseEntity(errorDetails, EmptyBookException::class.java.getAnnotation(ResponseStatus::class.java).value)
     }

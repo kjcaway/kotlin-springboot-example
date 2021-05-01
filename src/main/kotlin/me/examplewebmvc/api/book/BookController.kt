@@ -9,6 +9,7 @@ import me.examplewebmvc.api.book.service.BookService
 import me.examplewebmvc.api.book.dto.request.BookRequest
 import me.examplewebmvc.exception.AuthorException
 import me.examplewebmvc.exception.EmptyBookException
+import me.examplewebmvc.exception.JsonUtilException
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.http.HttpStatus
@@ -68,7 +69,7 @@ class BookController(
     @ApiOperation(value = "insert book", notes = "insert book")
     @PostMapping
     fun setBook(
-        @ApiParam(value = "{\"author\": \"\", \"name\": \"\"}")
+        @ApiParam(value = "{\"author\": \"\", \"name\": \"\", \"bookstoreId\": \"\"}")
         @RequestBody
         book: BookRequest
     ): ResponseEntity<Any>{
@@ -79,6 +80,9 @@ class BookController(
         } catch (e: AuthorException){
             logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "${e.author} is too short.")
+        } catch (e: JsonUtilException){
+            logger.error(e.localizedMessage, e)
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "json util error")
         } catch (e: Exception){
             logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
@@ -104,6 +108,9 @@ class BookController(
             // Use ResponseStatusException (new in spring 5)
             logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "${e.author} is too short.")
+        } catch (e: JsonUtilException){
+            logger.error(e.localizedMessage, e)
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "json util error")
         } catch (e: Exception){
             logger.error(e.localizedMessage, e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error")
